@@ -1,24 +1,30 @@
 package Coding
 
-import breeze.numerics.{atan, pow, sqrt}
-
 /**
  * Object for computing useful constants
  */
 object CodingUtils {
-  /**
-   * Get sequences of length n that go 1.0, 0.5, 0.25, ...
-   */
+
+  def dec2bitarray_unit(in_number: Int, bit_width: Int) = {
+    val bitarray = Array.fill(bit_width){0}
+    val binary_string = in_number.toBinaryString
+    if(bit_width <= binary_string.length) {
+      for (j <- 0 until bit_width) {
+        bitarray(bit_width - j - 1) = binary_string(bit_width - j - 1).asDigit
+      }
+    }else{
+      for (j <- 0 until binary_string.length){
+        bitarray(bit_width-j-1) = binary_string(binary_string.length-j-1).asDigit
+      }
+    }
+    bitarray
+  }
 
   def dec2bitarray(genPolynoimial: List[Int], bit_width: Int) = {
     val numRow = genPolynoimial.length
     val bitarray = Array.ofDim[Int](numRow, bit_width)
     for (i <- 0 until numRow){
-      val binary_string = genPolynoimial(i).toBinaryString
-      val len = binary_string.length
-      for (j <- 0 until bit_width){
-        bitarray(i)(bit_width-j-1) = binary_string(len-j-1).asDigit
-      }
+      bitarray(i) = dec2bitarray_unit(genPolynoimial(i), bit_width)
     }
     bitarray
   }
@@ -28,19 +34,7 @@ object CodingUtils {
     result
   }
 
-  def onesInPuncMat(arg: Array[Array[Int]]): Unit ={
-    arg.map(breeze.linalg.Vector(_)).reduce(_ + _)
-  }
-
-  def linear(n: Int) = for (i <- 0 until n) yield pow(2.0, -i)
-  /**
-   * Get gain for n-stage CORDIC
-   */
-  def gain(n: Int) = linear(n).map(x => sqrt(1 + x * x)).reduce(_ * _)
-  /**
-   * Get sequences of length n that go atan(1), atan(0.5), atan(0.25), ...
-   */
-  def arctan(n: Int) = linear(n).map(atan(_))
-
-  def halfPi = math.Pi/2.0
+//  def onesInPuncMat(arg: Array[Array[Int]]): Unit ={
+//    arg.map(breeze.linalg.Vector(_)).reduce(_ + _)
+//  }
 }
