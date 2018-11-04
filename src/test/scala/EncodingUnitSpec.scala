@@ -20,9 +20,9 @@ class EncodingUnitSpec extends FlatSpec with Matchers {
     tailBitingScheme = 0
   )
   it should "Convolutional Encoding" in {
-    val inSeq   = Seq(1, 0, 1, 1, 0, 0)
+    val inSeq1  = Seq(1, 0, 1, 1, 0, 0)
     val baseTrial = EncodingInOut(inBit=1, stateIn = 0)
-    val trials = inSeq.map { case(a) => baseTrial.copy(inBit = a)}
+    val trials = inSeq1.map { case(a) => baseTrial.copy(inBit = a)}
 
     FixedEncodingTester(params, trials) should be (true)
   }

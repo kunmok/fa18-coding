@@ -26,6 +26,7 @@ trait CodingParams[T <: Data] {
   val fbPolynomial: List[Int]       // feedback generator polynomial for Recursive Systematic Coding (Turbo Code)
   val tailBitingEn: Boolean         // 0: disable tail-biting, 1: enable tail-biting
   val tailBitingScheme: Int         // 0: zero tail-biting. 1: sophisticated tail-biting
+  val numInputs: Int
 }
 
 /**
@@ -49,6 +50,7 @@ case class FixedCoding(
   val protoInOut = UInt(1.W)
   val m = K - 1
   val nStates = math.pow(2.0, m.asInstanceOf[Double]).asInstanceOf[Int]
+  val numInputs   = math.pow(2.0, k.asInstanceOf[Double]).asInstanceOf[Int]
 }
 
 class CodingIO[T <: Data](params: CodingParams[T]) extends Bundle {
