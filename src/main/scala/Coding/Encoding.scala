@@ -54,7 +54,6 @@ case class FixedCoding(
 class CodingIO[T <: Data](params: CodingParams[T]) extends Bundle {
   val in    = Flipped(Decoupled(params.protoInOut.cloneType))
   val out   = Decoupled(Vec(params.O, params.protoInOut.cloneType))
-//  val out   = Decoupled(Vec(params.n, params.protoInOut.cloneType))
 
   override def cloneType: this.type = CodingIO(params).asInstanceOf[this.type]
 }
@@ -93,11 +92,9 @@ class Encoding[T <: Data](params: CodingParams[T]) extends Module {
   when(io.out.fire() && puncturingModule.io.stateOut === sDone) {
     state       := sStartRecv
   }
-//  state := convCodingModule.io.stateOut
 
   // connect registers to output
   io.out.bits   := puncturingModule.io.out
-//  io.out.bits   := convCodingModule.io.out
   io.in.ready   := state === sStartRecv   // io.out.ready is fired from FIFO sitting b/w interleaver and
   io.out.valid  := state === sDone
 }
