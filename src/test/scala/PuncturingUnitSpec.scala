@@ -1,11 +1,5 @@
 package Coding
 
-import chisel3._
-import chisel3.util._
-import dsptools.numbers._
-import freechips.rocketchip.diplomacy.LazyModule
-import freechips.rocketchip.subsystem.BaseSubsystem
-import org.scalacheck.Prop.False
 import org.scalatest.{FlatSpec, Matchers}
 
 class PuncturingUnitSpec extends FlatSpec with Matchers {
@@ -18,7 +12,7 @@ class PuncturingUnitSpec extends FlatSpec with Matchers {
     L = 7,
     O = 6,
     genPolynomial = List(7, 5), // generator polynomial
-    punctureEnable = false,
+    punctureEnable = true,
     punctureMatrix = List(6, 5), // Puncture Matrix
     CodingScheme = 0,
     fbPolynomial = List(0),

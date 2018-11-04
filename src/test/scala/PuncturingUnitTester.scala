@@ -1,8 +1,6 @@
 package Coding
 
-import chisel3._
 import dsptools.DspTester
-import org.scalatest.{FlatSpec, Matchers}
 
 case class puncturingInOut(
   // input sequence
@@ -18,6 +16,7 @@ case class puncturingInOut(
 class PuncturingUnitTester[T <: chisel3.Data](c: Puncturing[T], trials: Seq[puncturingInOut]) extends DspTester(c) {
   poke(c.io.in(0), 1)
   poke(c.io.in(1), 1)
+  poke(c.io.inReady, 1)
   poke(c.io.stateIn, 0)
   expect(c.io.out(0), 0)
   expect(c.io.out(1), 0)
@@ -214,7 +213,7 @@ object FixedPuncturingTester {
 //expect(c.io.stateOut, 0)
 
 
-// ****** puncturing on ******
+// ****** puncturing enabled ******
 //poke(c.io.in(0), 1)
 //poke(c.io.in(1), 1)
 //poke(c.io.stateIn, 0)
