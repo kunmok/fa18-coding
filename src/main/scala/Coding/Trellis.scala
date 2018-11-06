@@ -1,10 +1,6 @@
 package Coding
 
-import breeze.numerics.pow
 import chisel3._
-import chisel3.util._
-//import freechips.rocketchip.diplomacy.LazyModule
-//import freechips.rocketchip.subsystem.BaseSubsystem
 
 class Trellis[T <: Data](params: CodingParams[T]){
   require(params.m > 1)
@@ -14,6 +10,7 @@ class Trellis[T <: Data](params: CodingParams[T]){
   val numInputs   = math.pow(2.0, params.k.asInstanceOf[Double]).asInstanceOf[Int]
   val output_table = Array.ofDim[Int](params.nStates, numInputs, params.n)       // array storing outputs
   val nextstate_table = Array.ofDim[Int](params.nStates, numInputs, params.m)    // array storing next states
+  val nextstate_dec = Array.ofDim[Int](params.nStates, numInputs)       // array storing next states in decimal
   val outbits = Array.fill(params.n){0}
   val shiftReg = Array.fill(params.m){0}
   val generatorArray = Array.fill(params.K){0}
@@ -34,6 +31,35 @@ class Trellis[T <: Data](params: CodingParams[T]){
         output_table(currentStates)(currentInputs)(r) = outbits(r)
         nextstate_table(currentStates)(currentInputs)(r) = shiftReg(r)
       }
+      nextstate_dec(currentStates)(currentInputs) = CodingUtils.bitarray2dec(nextstate_table(currentStates)(currentInputs))
     }
   }
+  /*
+Following is for G=(7, 5)
+State | In  | Out | Next State        Next State  | In  | Out | Current State
+0     | 0   | 00  | 0                       0     | 0   |  00 |
+0     | 1   | 11  | 2                       0     | 1   |
+
+2     | 0   | 10  | 1                       1     |
+2     | 1   | 01  | 3                       1
+
+1     | 0   | 11  | 0                       2
+1     | 1   | 00  | 2                       2
+
+3     | 0   | 01  | 1                       3
+3     | 1   | 10  | 3                       3
+*/
+//  val currentstate_dec = Array.ofDim[Int](params.nStates, numInputs)    // array storing current states
+//  for (currentInputs <- 0 until numInputs){
+//    for (currentStates <- 0 until params.nStates){
+//      for (nextStates <- 0 until params.nStates){
+//        if (nextstate_dec(currentStates)(currentInputs) == nextStates) {
+//          currentstate_dec(nextStates)(currentStates) = nextStates
+//        }
+//      }
+//    }
+//  }
+
+
+
 }

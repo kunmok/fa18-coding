@@ -5,6 +5,16 @@ package Coding
  */
 object CodingUtils {
 
+  def bitarray2dec(in_bitarray: Array[Int]) ={
+    val len: Int = in_bitarray.length
+    val num = Array.fill(len){0}
+    num(0) = in_bitarray(0) * (math.pow(2.0, (len-1).asInstanceOf[Double])).asInstanceOf[Int]
+    for (i <- 1 until len){
+      num(i) = num(i-1) + in_bitarray(i) * (math.pow(2.0, (len-1-i).asInstanceOf[Double])).asInstanceOf[Int]
+    }
+    num(len-1)
+  }
+
   def dec2bitarray_unit(in_number: Int, bit_width: Int) = {
     val bitarray = Array.fill(bit_width){0}
     val binary_string = in_number.toBinaryString
@@ -34,7 +44,4 @@ object CodingUtils {
     result
   }
 
-//  def onesInPuncMat(arg: Array[Array[Int]]): Unit ={
-//    arg.map(breeze.linalg.Vector(_)).reduce(_ + _)
-//  }
 }
