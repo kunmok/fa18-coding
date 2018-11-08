@@ -27,7 +27,7 @@ case class FixedCoding(
   k: Int = 1,
   n: Int = 2,
   K: Int = 3,
-  L: Int = 7,
+  L: Int = 100,
 //  L: Int = 6144,
   O: Int = 48,
   genPolynomial: List[Int] = List(7, 5), // generator polynomial
@@ -42,5 +42,5 @@ case class FixedCoding(
   val m = K - 1
   val nStates = math.pow(2.0, m.asInstanceOf[Double]).asInstanceOf[Int]
   val numInputs   = math.pow(2.0, k.asInstanceOf[Double]).asInstanceOf[Int]
-  val pmBits = log2Ceil(L * (math.pow(2.0, n.asInstanceOf[Double]).asInstanceOf[Int] - 1))
+  val pmBits = log2Ceil(L * n)
 }
