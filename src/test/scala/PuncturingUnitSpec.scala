@@ -11,6 +11,7 @@ class PuncturingUnitSpec extends FlatSpec with Matchers {
     K = 3,
     L = 7,
     O = 6,
+    D = 36,
     genPolynomial = List(7, 5), // generator polynomial
     punctureEnable = true,
     punctureMatrix = List(6, 5), // Puncture Matrix
@@ -20,10 +21,7 @@ class PuncturingUnitSpec extends FlatSpec with Matchers {
     tailBitingScheme = 0
   )
   it should "puncturing code" in {
-    val inSeq   = Seq(1, 0, 1, 1, 0, 0)
-    val baseTrial = ConvCodingInOut(inBit=1, stateIn = 0)
-    val trials = inSeq.map { case(a) => baseTrial.copy(inBit = a)}
 
-    FixedConvCodingTester(params, trials) should be (true)
+    FixedPuncturingTester(params) should be (true)
   }
 }

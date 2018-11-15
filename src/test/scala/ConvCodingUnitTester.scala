@@ -2,18 +2,7 @@ package Coding
 
 import dsptools.DspTester
 
-case class ConvCodingInOut(
-  // input sequence
-  inBit: Int,
-  stateIn: Int,
-  // optional outputs
-  // if None, then don't check the result
-  // if Some(...), check that the result matches
-  outBitSeq: Option[List[Int]] = None,
-
-)
-
-class ConvCodingUnitTester[T <: chisel3.Data](c: ConvCoding[T], trials: Seq[ConvCodingInOut]) extends DspTester(c) {
+class ConvCodingUnitTester[T <: chisel3.Data](c: ConvCoding[T]) extends DspTester(c) {
   /*
   Following is for G=(7, 5)
   State | In  | Out | Next State
@@ -112,9 +101,9 @@ class ConvCodingUnitTester[T <: chisel3.Data](c: ConvCoding[T], trials: Seq[Conv
     * Convenience function for running tests
     */
 object FixedConvCodingTester {
-  def apply(params: FixedCoding, trials: Seq[ConvCodingInOut]): Boolean = {
+  def apply(params: FixedCoding): Boolean = {
     chisel3.iotesters.Driver.execute(Array("-tbn", "firrtl", "-fiwv"), () => new ConvCoding(params)) {
-      c => new ConvCodingUnitTester(c, trials)
+      c => new ConvCodingUnitTester(c)
     }
   }
 }

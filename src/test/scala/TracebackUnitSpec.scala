@@ -2,25 +2,26 @@ package Coding
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class ConvCodingUnitSpec extends FlatSpec with Matchers {
-  behavior of "ConvCodingUnitSpec"
+class TracebackUnitSpec extends FlatSpec with Matchers {
+  behavior of "TracebackUnitSpec"
 
   val params = FixedCoding(
     k = 1,
     n = 2,
     K = 3,
-    L = 7,
+    L = 2,
     O = 6,
-    D = 36,
+    D = 5,
     genPolynomial = List(7, 5), // generator polynomial
-    punctureEnable = false,
+    punctureEnable = true,
     punctureMatrix = List(6, 5), // Puncture Matrix
     CodingScheme = 0,
     fbPolynomial = List(0),
-    tailBitingEn = true,
+    tailBitingEn = false,
     tailBitingScheme = 0
   )
-  it should "Convolution code" in {
-    FixedConvCodingTester(params) should be (true)
+  it should "Traceback" in {
+
+    FixedTracebackTester(params) should be (true)
   }
 }

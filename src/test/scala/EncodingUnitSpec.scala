@@ -11,6 +11,7 @@ class EncodingUnitSpec extends FlatSpec with Matchers {
     K = 3,
     L = 7,
     O = 6,
+    D = 36,
     genPolynomial = List(7, 5), // generator polynomial
     punctureEnable = true,
     punctureMatrix = List(6, 5), // Puncture Matrix

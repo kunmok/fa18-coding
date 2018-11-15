@@ -18,6 +18,9 @@ class BranchMetric[T <: Data](params: CodingParams[T]) extends Module {
 
   val trellisObj  = new Trellis[T](params)
 
+  // below is for HARD-DECISION
+  // currently not supporting for punctured input sequence
+  // TODO: whenever bit is punctured, ignore the branch metric calculation
   for (currentStates <- 0 until params.nStates) {
     for (currentInputs <- 0 until params.numInputs) {
       for (r <- 0 until params.n) {

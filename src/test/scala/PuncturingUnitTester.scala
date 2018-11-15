@@ -2,18 +2,7 @@ package Coding
 
 import dsptools.DspTester
 
-case class puncturingInOut(
-  // input sequence
-  inBit: Int,
-  stateIn: Int,
-  // optional outputs
-  // if None, then don't check the result
-  // if Some(...), check that the result matches
-  outBitSeq: Option[List[Int]] = None,
-
-)
-
-class PuncturingUnitTester[T <: chisel3.Data](c: Puncturing[T], trials: Seq[puncturingInOut]) extends DspTester(c) {
+class PuncturingUnitTester[T <: chisel3.Data](c: Puncturing[T]) extends DspTester(c) {
   poke(c.io.in(0), 1)
   poke(c.io.in(1), 1)
   poke(c.io.inReady, 1)
@@ -131,9 +120,9 @@ class PuncturingUnitTester[T <: chisel3.Data](c: Puncturing[T], trials: Seq[punc
     * Convenience function for running tests
     */
 object FixedPuncturingTester {
-  def apply(params: FixedCoding, trials: Seq[puncturingInOut]): Boolean = {
+  def apply(params: FixedCoding): Boolean = {
     chisel3.iotesters.Driver.execute(Array("-tbn", "firrtl", "-fiwv"), () => new Puncturing(params)) {
-      c => new PuncturingUnitTester(c, trials)
+      c => new PuncturingUnitTester(c)
     }
   }
 }

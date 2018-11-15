@@ -2,10 +2,10 @@ package Coding
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class PathMetricUnitSpec extends FlatSpec with Matchers {
-  behavior of "Path Metric UnitSpec"
+class StackUnitSpec extends FlatSpec with Matchers {
+  behavior of "Stack Memory UnitSpec"
 
-  it should "Calculate Path Metric" in {
+  it should "stack data in memory" in {
 
     val params = FixedCoding(
       k = 1,
@@ -23,6 +23,6 @@ class PathMetricUnitSpec extends FlatSpec with Matchers {
       tailBitingScheme = 0
     )
 
-    FixedPathMetricTester(params) should be (true)
+    FixedStackTester(params, params.L) should be (true)
   }
 }

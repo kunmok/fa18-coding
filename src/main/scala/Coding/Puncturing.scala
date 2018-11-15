@@ -70,15 +70,18 @@ class Puncturing[T <: Data](params: CodingParams[T]) extends Module {
         stateWire := sDone
         p_cnt := 0.U
       }
+      when((o_cnt >= (params.O - params.n).U) && ((((o_cnt+1.U) / params.n.U) % puncMatBitWidth.U) === (puncMatBitWidth.U -1.U))) {
+        o_cnt := 0.U
+      }
     }.otherwise{                                  // no puncturing
       (0 until params.n).map(i => { bufInterleaver(o_cnt + i.U) := io.in(i.U) })
       o_cnt := o_cnt + params.n.U
-      when(o_cnt === (params.O - 2).U) {
+      when(o_cnt === (params.O - params.n).U) {
         stateWire := sDone
       }
-    }
-    when(o_cnt === (params.O - params.n).U) {
-      o_cnt := 0.U
+      when(o_cnt === (params.O - params.n).U) {
+        o_cnt := 0.U
+      }
     }
   }
 

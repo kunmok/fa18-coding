@@ -2,16 +2,14 @@ package Coding
 
 import chisel3._
 import chisel3.util._
+import dsptools.numbers._
 //import freechips.rocketchip.diplomacy.LazyModule
 //import freechips.rocketchip.subsystem.BaseSubsystem
 
-class PathMetric[T <: Data](params: CodingParams[T]) extends Module {
-  require(params.m > 1)
-  require(params.k > 0)
-  require(params.n > 0)
-
+class PathMetric[T <: Data: Real](params: CodingParams[T]) extends Module {
   val io = IO(new Bundle {
     val in        = Input(Vec(params.n, UInt(1.W)))
+//    val in2       = Input(Vec(params.n, T))
     val inReady   = Input(UInt(1.W))
     val outPM       = Output(Vec(params.nStates, UInt(params.pmBits.W)))  // storing Path Metric
     val outSP       = Output(Vec(params.nStates, UInt(params.m.W)))       // storing Survival Path
@@ -24,7 +22,6 @@ class PathMetric[T <: Data](params: CodingParams[T]) extends Module {
   val branchMetricModule  = Module(new BranchMetric[T](params))
   (0 until params.n).map(i => {branchMetricModule.io.in(i) := io.in(i)})
 
-  val recvBitCnt          = RegInit(0.U(log2Ceil(params.L).W))
   val numRows             = math.pow(2.0, (params.m-1).asInstanceOf[Double]).asInstanceOf[Int]
   val tmpSP               = Wire(Vec(params.nStates, Vec(params.numInputs, UInt(params.m.W))))
   for (currentInput <- 0 until params.numInputs){
@@ -85,4 +82,14 @@ class PathMetric[T <: Data](params: CodingParams[T]) extends Module {
   }
   io.outPM := pmRegs
   io.outSP := survivalPath
+
+  // ******** Memory Configuration ********
+//  val sramModule  = Module(new SRAM[T](params))
+//  val startReading := true.B
+//  sramModule.io.en    := startReading
+//  sramModule.io.push  := true.B
+//  sramModule.io.pop   := false.B
+//  sramModule.io.dataIn := survivalPath
+
 }
+

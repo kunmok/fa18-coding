@@ -36,18 +36,18 @@ class Trellis[T <: Data](params: CodingParams[T]){
   }
   /*
 Following is for G=(7, 5)
-State | In  | Out | Next State        Next State  | In  | Out | Current State
-0     | 0   | 00  | 0                       0     | 0   |  00 |
-0     | 1   | 11  | 2                       0     | 1   |
+State | In  | Out | Next State
+0     | 0   | 00  | 0
+0     | 1   | 11  | 2
 
-2     | 0   | 10  | 1                       1     |
-2     | 1   | 01  | 3                       1
+2     | 0   | 10  | 1
+2     | 1   | 01  | 3
 
-1     | 0   | 11  | 0                       2
-1     | 1   | 00  | 2                       2
+1     | 0   | 11  | 0
+1     | 1   | 00  | 2
 
-3     | 0   | 01  | 1                       3
-3     | 1   | 10  | 3                       3
+3     | 0   | 01  | 1
+3     | 1   | 10  | 3
 */
 //  val currentstate_dec = Array.ofDim[Int](params.nStates, numInputs)    // array storing current states
 //  for (currentInputs <- 0 until numInputs){

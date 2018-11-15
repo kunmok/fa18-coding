@@ -6,10 +6,6 @@ import chisel3.util._
 //import freechips.rocketchip.subsystem.BaseSubsystem
 
 class ConvCoding[T <: Data](params: CodingParams[T]) extends Module {
-  require(params.m > 1)
-  require(params.k > 0)
-  require(params.n > 0)
-
   val io = IO(new Bundle {
     val in        = Input(UInt(1.W))    // assuming k=1 for all convolutional coding
     val out       = Output(Vec(params.n, UInt(1.W)))
