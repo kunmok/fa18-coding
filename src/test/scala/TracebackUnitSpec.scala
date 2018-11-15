@@ -9,9 +9,9 @@ class TracebackUnitSpec extends FlatSpec with Matchers {
     k = 1,
     n = 2,
     K = 3,
-    L = 2,
+    L = 3,
     O = 6,
-    D = 5,
+    D = 4,
     genPolynomial = List(7, 5), // generator polynomial
     punctureEnable = true,
     punctureMatrix = List(6, 5), // Puncture Matrix

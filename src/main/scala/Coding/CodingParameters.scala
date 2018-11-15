@@ -34,7 +34,7 @@ case class FixedCoding(
   L: Int = 100,
 //  L: Int = 6144,
   O: Int = 48,
-  D: Int = 36,
+  D: Int = 36,                            // D needs to be larger than 4 in current architecture
   genPolynomial: List[Int] = List(7, 5), // generator polynomial
   punctureEnable: Boolean = false,
   punctureMatrix: List[Int] = List(6, 5), // Puncture Matrix
